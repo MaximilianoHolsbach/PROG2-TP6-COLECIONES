@@ -15,6 +15,9 @@ public class Principal {
     public static void main(String[]args){
         Scanner input = new Scanner(System.in);
         String idBuscado;
+        String categoria;
+        int cantidad;
+        double min, max;
 
         //Creamos los productos a agregarse
         
@@ -45,8 +48,11 @@ public class Principal {
         Producto productoBuscado = depositoCentral.buscarProductoPorId(idBuscado);
         System.out.println(productoBuscado);
         System.out.println("");
+        depositoCentral.mostrarCategoriasDisponibles();//Mostramos las categorias antes de filtarlas
         System.out.println("Filtramos por categoria");
-        ArrayList<Producto> productosPorCategoria = depositoCentral.filtrarPorCategoria(CategoriaProducto.ALIMENTOS);
+        System.out.print("Ingrese la categoria para filtrar los productos: ");
+        categoria = input.nextLine();
+        ArrayList<Producto> productosPorCategoria = depositoCentral.filtrarPorCategoria(categoria);
         for (Producto producto : productosPorCategoria) {
             System.out.println(producto);
         }
@@ -58,6 +64,26 @@ public class Principal {
         System.out.println("");
         System.out.println("Listamos para comprobar");
         depositoCentral.listarProductos();
+        System.out.println("");
+        System.out.println("Actualizamos la cantidad del producto en el inventario");
+        System.out.print("Ingrese el Id para buscar el producto: ");
+        idBuscado = input.nextLine();
+        System.out.print("Ingrese la cantidad que desea agregar del producto: ");
+        cantidad = Integer.parseInt(input.nextLine());
+        Producto productoActualizar = depositoCentral.actualizarStock(idBuscado, cantidad);
+        System.out.println(productoActualizar);
+        System.out.println("");
+        System.out.println("La cantidad de articulos en stock es: "+depositoCentral.obtenerTotalStock());
+        System.out.println("");
+        System.out.println("El articulo con mayor stock es: "+depositoCentral.obtenerProductoConMayorStock());
         
+        System.out.print("Ingrese el precio minimo que desea filtrar: ");
+        min = Double.parseDouble(input.nextLine());
+        System.out.print("Ingrese el precio maximo que desea filtrar: ");
+        max = Double.parseDouble(input.nextLine());
+        ArrayList<Producto> productosPorPrecio = depositoCentral.filtrarProductosPorPrecio(min, max);
+        for (Producto producto : productosPorPrecio) {
+            System.out.println(producto);
+        }
     }
 }
