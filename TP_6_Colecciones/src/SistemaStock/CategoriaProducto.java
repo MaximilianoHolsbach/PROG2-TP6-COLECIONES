@@ -19,5 +19,5 @@ public enum CategoriaProducto {
     }
     public String getDescripcion() {
     return descripcion;
-    }
+    }    
 }

@@ -28,10 +28,10 @@ public class Inventario {
         }
         return encontrado;
     }
-    public ArrayList<Producto> filtrarPorCategoria(CategoriaProducto categoria){
+    public ArrayList<Producto> filtrarPorCategoria(String categoria){
         ArrayList<Producto> seleccionados = new ArrayList<>();
         for (Producto producto : this.productos) {
-            if(producto.getCategoria() == categoria){
+            if(producto.getCategoria().name().equalsIgnoreCase(categoria)){
                 seleccionados.add(producto);
             }
         }
@@ -44,15 +44,48 @@ public class Inventario {
     }
     public Producto actualizarStock(String id, int nuevaCantidad){
         Producto productoActualizar = buscarProductoPorId(id);
+        if(productoActualizar != null){
+            productoActualizar.cantidad += nuevaCantidad;
+        }
         return productoActualizar;
     }
+    public void mostrarCategoriasDisponibles(){
+        System.out.println("Categorías disponibles");
+        for (CategoriaProducto categoria : CategoriaProducto.values()) {
+            System.out.println("- "+categoria.name()+": "+categoria.getDescripcion());
+        }
+    }
+    public int obtenerTotalStock(){
+        int totalDeArticulos = 0;
+        for (Producto producto : productos) {
+            totalDeArticulos += producto.cantidad;
+        }
+        return totalDeArticulos;
+    }
+    public Producto obtenerProductoConMayorStock(){
+        Producto productoMax = null;
+        int maxStock = -1;
+        for (Producto producto : productos) {
+            if(producto.getCantidad() > maxStock){
+                maxStock = producto.getCantidad();
+                productoMax = producto;
+            }
+        }
+        return productoMax;
+    }
+    public ArrayList<Producto> filtrarProductosPorPrecio(double min, double max){
+        ArrayList<Producto> seleccionados = new ArrayList<>();
+        for (Producto producto : this.productos) {
+            double precio = producto.getPrecio();
+            if(precio >= min && precio <= max){
+                seleccionados.add(producto);
+            }
+        }
+        return seleccionados;
+    }
     /*
-    actualizarStock(String id, int nuevaCantidad)
-    filtrarPorCategoria(CategoriaProducto categoria)
-    obtenerTotalStock()
-    obtenerProductoConMayorStock()
-    filtrarProductosPorPrecio(double min, double max)
-    mostrarCategoriasDisponibles()
+    
+    
     */
 
     
