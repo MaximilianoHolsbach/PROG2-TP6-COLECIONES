@@ -1,11 +1,7 @@
 package SistemaStock;
-
 import java.util.ArrayList;
-
-
 public class Inventario {
     private ArrayList<Producto> productos;
-    
     public Inventario() {
         this.productos = new ArrayList<>();
     }
@@ -82,11 +78,5 @@ public class Inventario {
             }
         }
         return seleccionados;
-    }
-    /*
-    
-    
-    */
-
-    
+    }  
 }
